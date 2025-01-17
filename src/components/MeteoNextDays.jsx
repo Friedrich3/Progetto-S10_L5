@@ -68,7 +68,6 @@ const MeteoNextDays = function (props) {
             <Col xs={12} md={6}>
               <ListGroup>
                 {listaMeteo.map((e) => {
-                    console.log(e)
                   return (
                     <ListGroup.Item key={e.dt}>
                       <div>
