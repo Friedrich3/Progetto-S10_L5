@@ -21,7 +21,7 @@ const location = useLocation()
                     </Link>
                   </Nav.Item>
                   <Nav.Item>
-                    <Link to={"/"} className={ location.pathname === '/'? 'nav-link active':'nav-link' }>
+                    <Link to={"/next-days"} className={ location.pathname === '/next-days'? 'nav-link active':'nav-link' }>
                         Next Days
                     </Link>
                   </Nav.Item>
