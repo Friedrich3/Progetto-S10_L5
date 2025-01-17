@@ -3,6 +3,10 @@ import MeteoAttuale from "./MeteoAttuale";
 import MeteoNextDays from "./MeteoNextDays";
 import MeteoOdierno from "./MeteoOdierno";
 import MeteoSearch from "./MeteoSearch";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import NotFound from "./NotFound";
+import MeteoNav from "./MeteoNav";
+import MeteoFooter from "./MeteoFooter";
 
 const MeteoMainSection = function () {
   const [ipAddress, setIpAddress] = useState(""); //FOR FIRST RENDER
@@ -37,26 +41,40 @@ const MeteoMainSection = function () {
       if (response.ok) {
         const data = await response.json();
         setGeoInfo(data);
-        setGeoInfoPresent(true)
+        setGeoInfoPresent(true);
       } else {
-          setGeoInfoPresent(false)
+        setGeoInfoPresent(false);
         throw new Error("FetchLocation");
       }
     } catch (error) {
       console.log("Error", error);
-      setGeoInfoPresent(false)
+      setGeoInfoPresent(false);
     }
   };
 
   return (
     <main className=" bg-body-secondary">
-      <MeteoSearch search={search} setSearch={setSearch} />
       {geoInfoPresent && (
-        <>
-          <MeteoAttuale location={geoInfo} search={search} />
-          <MeteoNextDays />
-          <MeteoOdierno location={geoInfo} search={search} />
-        </>
+          <BrowserRouter>
+          <MeteoNav />
+          <Routes>
+            <Route
+              path="/"
+              element={
+                  <>
+                  <MeteoSearch search={search} setSearch={setSearch} />
+                  <MeteoAttuale location={geoInfo} search={search} />
+                  <MeteoOdierno location={geoInfo} search={search} />
+                </>
+              }
+            />
+            <Route path="/next-days" element={<MeteoNextDays />} />
+
+
+            <Route path="*" element={<NotFound />} />
+          </Routes>
+          <MeteoFooter />
+        </BrowserRouter>
       )}
     </main>
   );

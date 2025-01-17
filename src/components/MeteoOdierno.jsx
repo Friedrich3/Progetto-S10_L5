@@ -1,8 +1,9 @@
 /* eslint-disable react/prop-types */
 import { useEffect, useState } from "react";
-import { Card, Col, Container, ListGroup, Row } from "react-bootstrap";
+import { Card, Col, Container, Row } from "react-bootstrap";
 
 const MeteoOdierno = function (props) {
+  // eslint-disable-next-line no-unused-vars
   const [citta, setCitta] = useState({});
   const [listaMeteo, setListaMeteo] = useState([]);
   const [isVisible, setIsVisible] = useState(false);
