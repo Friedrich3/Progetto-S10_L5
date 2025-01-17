@@ -102,6 +102,7 @@ const MeteoAttuale = function (props) {
                 <Card.Title className="fs-1">
                   {citta.name} - {citta.sys.country}
                 </Card.Title>
+                <Card.Text className="fs-3">{citta.weather[0].main}</Card.Text>
 
                 <Card.Text className="d-flex">
                   <img

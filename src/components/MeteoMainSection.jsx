@@ -49,13 +49,13 @@ const MeteoMainSection = function () {
   };
 
   return (
-    <main>
+    <main className=" bg-body-secondary">
       <MeteoSearch search={search} setSearch={setSearch} />
       {geoInfoPresent && (
         <>
           <MeteoAttuale location={geoInfo} search={search} />
           <MeteoNextDays />
-          <MeteoOdierno />
+          <MeteoOdierno location={geoInfo} search={search} />
         </>
       )}
     </main>
