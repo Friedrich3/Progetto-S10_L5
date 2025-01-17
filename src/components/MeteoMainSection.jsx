@@ -7,11 +7,14 @@ import MeteoSearch from "./MeteoSearch";
 const MeteoMainSection = function () {
   const [ipAddress, setIpAddress] = useState(""); //FOR FIRST RENDER
   const [geoInfo, setGeoInfo] = useState({});
+  const [geoInfoPresent, setGeoInfoPresent] = useState(false);
 
   const [search, setSearch] = useState(""); //FOR SEARCH COMPONENT
 
-  useEffect(() => {         //DIDMOUNT
+  useEffect(() => {
+    //DIDMOUNT
     fetchIpAddress();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const fetchIpAddress = async function () {
@@ -19,35 +22,43 @@ const MeteoMainSection = function () {
       const response = await fetch("https://api.ipify.org");
       if (response.ok) {
         const data = await response.text();
-        setIpAddress(data)
-        fetchLocation()
+        setIpAddress(data);
+        fetchLocation();
       } else {
         throw new Error("FetchIP");
       }
     } catch (error) {
-      console.log("Error",error);
+      console.log("Error", error);
     }
   };
-  const fetchLocation = async function (){
+  const fetchLocation = async function () {
     try {
-        const response = await fetch("http://ip-api.com/json/" + ipAddress);
-        if (response.ok) {
-          const data = await response.json()
-          setGeoInfo(data)
-        } else {
-          throw new Error("FetchLocation");
-        }
-      } catch (error) {
-        console.log("Error",error);
+      const response = await fetch(`http://ip-api.com/json/${ipAddress}`);
+      if (response.ok) {
+        const data = await response.json();
+        setGeoInfo(data);
+        setGeoInfoPresent(true)
+        console.log(data)
+      } else {
+          setGeoInfoPresent(false)
+        throw new Error("FetchLocation");
       }
-  }
+    } catch (error) {
+      console.log("Error", error);
+      setGeoInfoPresent(false)
+    }
+  };
 
   return (
     <main>
       <MeteoSearch search={search} setSearch={setSearch} />
-      <MeteoAttuale location={geoInfo} search={search}/>
-      <MeteoNextDays />
-      <MeteoOdierno />
+      {geoInfoPresent && (
+        <>
+          <MeteoAttuale location={geoInfo} search={search} />
+          <MeteoNextDays />
+          <MeteoOdierno />
+        </>
+      )}
     </main>
   );
 };
