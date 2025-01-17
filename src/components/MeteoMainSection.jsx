@@ -55,21 +55,28 @@ const MeteoMainSection = function () {
   return (
     <main className=" bg-body-secondary">
       {geoInfoPresent && (
-          <BrowserRouter>
+        <BrowserRouter>
           <MeteoNav />
           <Routes>
             <Route
               path="/"
               element={
-                  <>
+                <>
                   <MeteoSearch search={search} setSearch={setSearch} />
                   <MeteoAttuale location={geoInfo} search={search} />
                   <MeteoOdierno location={geoInfo} search={search} />
                 </>
               }
             />
-            <Route path="/next-days" element={<MeteoNextDays />} />
-
+            <Route
+              path="/next-days"
+              element={
+              <>
+              <MeteoSearch search={search} setSearch={setSearch} />
+              <MeteoNextDays location={geoInfo} search={search} />
+              
+              </>}
+            />
 
             <Route path="*" element={<NotFound />} />
           </Routes>
