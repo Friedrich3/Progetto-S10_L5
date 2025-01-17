@@ -1,4 +1,7 @@
-const MeteoAttuale = function(){
+const MeteoAttuale = function(props){
+
+
+
     return(
         <>
         </>

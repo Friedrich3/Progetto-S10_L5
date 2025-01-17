@@ -1,8 +1,9 @@
-import { useState } from "react";
+/* eslint-disable react/prop-types */
+
 import { Button, Col, Container, Form, Row } from "react-bootstrap";
 
-const MeteoSearch = function () {
-  const [search, setSearch] = useState("");
+const MeteoSearch = function (props) {
+ 
 
   return (
     <Container fluid>
@@ -20,9 +21,9 @@ const MeteoSearch = function () {
               <Form.Control
                 type="text"
                 placeholder="Search..."
-                value={search}
+                value={props.search}
                 onChange={(event) => {
-                  setSearch(event.target.value);
+                  props.setSearch(event.target.value);
                 }}
               />
             </Form.Group>
