@@ -38,7 +38,6 @@ const MeteoMainSection = function () {
         const data = await response.json();
         setGeoInfo(data);
         setGeoInfoPresent(true)
-        console.log(data)
       } else {
           setGeoInfoPresent(false)
         throw new Error("FetchLocation");

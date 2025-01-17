@@ -1,8 +1,10 @@
 /* eslint-disable react/prop-types */
 
+import { useState } from "react";
 import { Button, Col, Container, Form, Row } from "react-bootstrap";
 
 const MeteoSearch = function (props) {
+    const [insideSearch, setInsideSearch] = useState('')
  
 
   return (
@@ -12,6 +14,7 @@ const MeteoSearch = function (props) {
           <Form
             onSubmit={(e) => {
               e.preventDefault();
+              props.setSearch(insideSearch)
             }}
           >
             <Form.Group className="my-3 d-flex">
@@ -21,9 +24,9 @@ const MeteoSearch = function (props) {
               <Form.Control
                 type="text"
                 placeholder="Search..."
-                value={props.search}
+                value={insideSearch}
                 onChange={(event) => {
-                  props.setSearch(event.target.value);
+                    setInsideSearch(event.target.value);
                 }}
               />
             </Form.Group>
