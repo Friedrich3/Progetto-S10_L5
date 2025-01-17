@@ -1,6 +1,9 @@
 /* eslint-disable react/prop-types */
 import { useEffect, useState } from "react";
 import { Card, Col, Container, Row } from "react-bootstrap";
+import Loader from "./Loader";
+import Error from "./Error";
+
 
 
 
@@ -8,6 +11,11 @@ const MeteoAttuale = function (props) {
   const [citta, setCitta] = useState({});
   const [background, setBackground] = useState('')
   const [isVisible, setIsVisible] = useState(false);
+
+  const [isLoading, setIsLoading] = useState(true)
+  const [isError, setIsError] = useState(false)
+
+  const [isLoadingImg, setIsLoadingImg ] = useState(true)
 
   useEffect(() => {
     if(props.search === ''){
@@ -27,6 +35,8 @@ const MeteoAttuale = function (props) {
         const data = await response.json();
         setCitta(data);
         fetchImage(props.location.city)
+        setIsLoading(false)
+        setIsError(false)
         setIsVisible(true)
       } else {
         throw new Error("ErroreFetch");
@@ -34,6 +44,8 @@ const MeteoAttuale = function (props) {
     } catch (error) {
       console.log("Errore", error);
       setIsVisible(false)
+      setIsLoading(false)
+      setIsError(true)
     }
   };
 
@@ -45,6 +57,8 @@ const MeteoAttuale = function (props) {
         const data = await response.json();
         setCitta(data);
         fetchImage(props.search)
+        setIsLoading(false)
+        setIsError(false)
         setIsVisible(true)
       } else {
         throw new Error("ErroreFetch");
@@ -52,16 +66,20 @@ const MeteoAttuale = function (props) {
     } catch (error) {
       console.log("Errore", error);
       setIsVisible(false)
+      setIsLoading(false)
+      setIsError(true)
     }
   }
   const fetchImage = async function(element){
     const url = 'https://pixabay.com/api/?key=48285394-8f72254ba014ab76b2636f26a&q='+element
     try{
+        setIsLoadingImg(true)
         const response = await fetch(url)
         if(response.ok){
             const data = await response.json()
             //console.log(data.hits[0].largeImageURL)
             setBackground(data.hits[0].largeImageURL)
+            setIsLoadingImg(false)
         }else{
             throw new Error('ErroreFetchImg')
         }
@@ -88,16 +106,36 @@ const MeteoAttuale = function (props) {
 
   return (
     <>
+    {
+        isLoading && (
+            <Loader ></Loader>
+        )}
+    {
+        isError &&
+        (<Error />)
+    }
+
+
+
+
     {isVisible &&
       <Container fluid style={{ height: "50vh" }}>
         <Row xs={12} className="h-100">
           <Col className="h-100">
             <Card className="bg-dark text-white fw-bold custom-text">
-              <Card.Img
-                src={background}
-                alt="WeatherInfo"
-                style={{ height: "45vh" }}
-              />
+                {   isLoadingImg &&
+                    <div style={{backgroundImage:'url(https://blog.teamtreehouse.com/wp-content/uploads/2015/05/InternetSlowdown_Day.gif)', height: '45vh', backgroundRepeat: 'no-repeat' , backgroundPosition: 'center'}} >
+                        
+                        
+                    </div>
+                }
+                {   isLoadingImg=== false &&
+                    <Card.Img
+                      src={background}
+                      alt="WeatherInfo"
+                      style={{ height: "45vh" }}
+                    />
+                }
               <Card.ImgOverlay>
                 <Card.Title className="fs-1">
                   {citta.name} - {citta.sys.country}

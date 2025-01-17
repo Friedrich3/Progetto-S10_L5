@@ -2,7 +2,8 @@ import 'bootstrap/dist/css/bootstrap.min.css'
 import MeteoMainSection from './components/MeteoMainSection'
 
 
-
+// AGGIUNGERE LOADER E ERROR
+// creare sotto Componenti per i vari render 
 // TODO far diventare app la mainpage
 // Rendere MeteoOdierno interactive per ricevere solo il meteo di oggi
 // Dividere la sezione MeteoNextDays Per giorno 
