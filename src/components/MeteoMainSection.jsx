@@ -37,7 +37,7 @@ const MeteoMainSection = function () {
   };
   const fetchLocation = async function () {
     try {
-      const response = await fetch(`http://ip-api.com/json/${ipAddress}`);
+      const response = await fetch(`https://ipapi.co/${ipAddress}/json/`) ; //https://ipapi.co/${ipAddress}/json/   http://ip-api.com/json/${ipAddress}
       if (response.ok) {
         const data = await response.json();
         setGeoInfo(data);
